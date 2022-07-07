@@ -1,6 +1,9 @@
 pipeline {
     agent any
-
+	environment {
+        registry = "ganeshshiv/learndocker"
+        registryCredential = 'dockerhub'
+    }
     stages {
         stage('Fetch Code') {
             steps {
@@ -45,9 +48,27 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t learndocker .'
+                    //sh 'docker build -t learndocker .'
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
+        }
+        
+        stage('Publish Image') {
+          steps{
+            script {
+              docker.withRegistry( '', registryCredential ) {
+                dockerImage.push("$BUILD_NUMBER")
+                dockerImage.push('latest')
+              }
+            }
+          }
+        }
+
+        stage('Remove Unused docker image') {
+          steps{
+            sh "docker rmi $registry:$BUILD_NUMBER"
+          }
         }
 
     }
