@@ -48,8 +48,8 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t learndocker_$BUILD_NUMBER .'
-                    //dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    //sh 'docker build -t learndocker_$BUILD_NUMBER .'
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
         }
@@ -58,9 +58,9 @@ pipeline {
           steps{
             script {
               docker.withRegistry( '', registryCredential ) {
-                //dockerImage.push("$BUILD_NUMBER")
-                //dockerImage.push('latest')
-                sh "echo hi"
+                dockerImage.push("$BUILD_NUMBER")
+                dockerImage.push('latest')
+                // sh "echo hi"
               }
             }
           }
@@ -68,7 +68,8 @@ pipeline {
 
         stage('Remove Unused docker image') {
           steps{
-            sh "docker rmi $registry:$BUILD_NUMBER"
+            //sh "docker rmi $registry:$BUILD_NUMBER"
+            sh "echo remove image"
           }
         }
 
