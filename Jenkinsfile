@@ -72,6 +72,7 @@ pipeline {
         }
         
         stage('Deploy to k8s'){
+        	agent { label 'Kube' }
             steps{
                 script{
                     kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'kubeconfic')
