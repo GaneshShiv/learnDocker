@@ -48,8 +48,8 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    //sh 'docker build -t learndocker .'
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    sh 'docker build -t learndocker .'
+                    //dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
         }
