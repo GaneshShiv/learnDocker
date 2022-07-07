@@ -10,13 +10,13 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/GaneshShiv/learnDocker.git'
             }
         }
-        stage('BUILD') {
+        stage('Build') {
             steps {
                 sh 'mvn clean install -DskipTests'
             }
         }
 
-        stage('UNIT TEST') {
+        stage('Unit Test') {
             steps{
                 sh 'mvn test'
             }
