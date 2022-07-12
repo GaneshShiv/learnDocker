@@ -3,6 +3,8 @@ pipeline {
 	environment {
         registry = "ganeshshiv/learndocker"
         registryCredential = 'dockerhub'
+        k8Container = 'learn-docker-k8s'
+        k8Deployment = 'learn-docker'
     }
     stages {
         stage('Fetch Code') {
@@ -75,7 +77,8 @@ pipeline {
         	agent { label 'Kube' }
             steps{
                 script{
-                	sh "kubectl apply -f deploymentservice.yaml"
+                	// sh "kubectl apply -f deploymentservice.yaml"
+                	sh " kubectl set image deployment/$k8Deployment $k8Container=$registry:$BUILD_NUMBER"
                    // kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'kubeconfic')
                 }
             }
