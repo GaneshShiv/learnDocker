@@ -75,7 +75,7 @@ pipeline {
         	agent { label 'Kube' }
             steps{
                 script{
-                	sh "kubectl apply -f deployment.yaml"
+                	sh "kubectl apply -f deploymentservice.yaml"
                    // kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'kubeconfic')
                 }
             }
