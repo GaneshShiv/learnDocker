@@ -10,6 +10,6 @@ public class LearnDockerController {
 
 	@GetMapping("/appHealth")
 	public String appHealth() {
-		return "Healthy";
+		return "Healthy k8";
 	}
 }
